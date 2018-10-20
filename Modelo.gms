@@ -1,11 +1,11 @@
 $Set n 2
-$Set d 2
+$Set d 1
 $Set maxd2 2
 
 
 Sets
          i       Días    /i0*i%d%/
-         j       Num ciudades /j1*j%d%/
+         j       Num ciudades /j1*j%n%/
          l       Num puntos de interes de 1 a 2maxd
                              /l1*l%maxd2%/;
 Alias(j,k)
@@ -14,7 +14,7 @@ Scalars
          n       Num ciudades
                  /2/
          d Num dias
-                 /2/
+                 /1/
          maxd Max num dias
                  /1/
 
@@ -67,7 +67,7 @@ fObj     ..      obj=e=p1/(sum( (i,j),(x(i,j)+1) ))+p2*(f2+sum((i,j),x(i,j)*CV(j
 rest_mind (j)     ..      mind=l=sum(i,x(i,j));
 rest_maxd (j)        ..      maxd=g=sum(i,x(i,j));
 noDosCiudades (i)    ..     sum((j),x(i,j) )=e=1;
-primerDia        ..      x('i0','j1')=g=0+0.00000001;
+primerDia        ..      x('i0','j1')=g=1;
 
 Model Modelo /all/;
 option minlp = BARON                 ;
