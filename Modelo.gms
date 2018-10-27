@@ -1,59 +1,11 @@
-$Set n 4
-$Set d 3
-$Set maxd2 2
 
+$offlisting
+$include C:\Users\Dell\Documents\UNIANDES\MOS\ProyectoMOS\paramsBase1.inc
+$onlisting
 
-Sets
-         i       Días    /i0*i%d%/
-         j       Num ciudades /j1*j%n%/
-         l       Num puntos de interes de 1 a 2maxd
-                             /l1*l%maxd2%/;
-Alias(j,k)
-
-Scalars
-         inicio Ciudad de inicio
-                 /1/
-         n       Num ciudades
-                 /4/
-         d Num dias
-                 /3/
-         maxd Max num dias
-                 /1/
-
-         mind    Min num dias
-                 /1/
-         p1      Prioridad dias
-                 /1/
-         p2      Prioridad presupuesto
-                 /0/;
-Parameters
-         Puntaje(j)      Puntaje del punto j
-         CV(j)    Vida promedio por ciudad
-         /j1 1, j2 1,j3 1,j4 1/
-       ;
-table CT(j,k)       Costos transporte
-                 j1      j2      j3      j4
-         j1      1       1       1       1
-         j2      1       1       1       1
-         j3      1       1       1       1
-         j4      1       1       1       1
-          ;
-table S(j,l) Puntaje de ciudad i por punto de interés l
-                 l1      l2
-         j1      1       1
-         j2      1       1
-         j3      1       1
-         j4      1       1
-                 ;
-table R(j,l) Cantidad de reviews de ciudad i por punto de interes l
-                 l1      l2
-         j1      1       1
-         j2      1       1
-         j3      1       1
-         j4      1       1
-                   ;
-
-LOOP((j),Puntaje(j)=sum(l,S(j,l)*(R(j,l))**0.5/5););
+$offlisting
+$include C:\Users\Dell\Documents\UNIANDES\MOS\ProyectoMOS\tablesBase1.inc
+$onlisting
 
 Variables
          x(i,j)       En el dia i me quedo en la ciudad j
