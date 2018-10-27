@@ -35,7 +35,9 @@ def generateTables(req_data):
             line=f.readline()
             i=0
             while line!=None and i<n:
-                CV.append(line)
+                data=line.split(" ")
+                for x in data:
+                    CV.append(x)
                 line=f.readline()
                 i+=1
             f.close()
@@ -114,15 +116,18 @@ def createMatrix(fileName,dim1,dim2):
         else:
             #Leer de un archivo el costo de vida por ciudad
             f = open(fileName, "r")
-            line=f.readline()
             i=0
-            while line!=None and i<dim1:
-                data=line.split(' ')
+            for line in f:
+                if i>=dim1:
+                    break
+                print ("LINE",line)
+                data=line.rstrip("\n").split(' ')
                 mat.append([])
                 for x in data:
-                    mat[i].append(data)
+                    mat[i].append(x)
                 i+=1
-            f.close()            
+            f.close() 
+            print ("MATRIX",mat)           
     else:
         for j in range(0,dim1):
             mat.append([])
@@ -150,7 +155,7 @@ def generateParams(req_data):
     sec.append(str(maxd))
     sec.append('/\n')
     sec.append('\tmind Min num dias /')
-    sec.append(str(maxd))
+    sec.append(str(mind))
     sec.append('/\n')
     sec.append('\tp1 Prioridad dias /')
     sec.append(str(p1))

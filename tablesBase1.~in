@@ -1,0 +1,26 @@
+Parameters
+	Puntaje(j) Puntaje del punto j
+ 	CV(j) Vida promedio por ciudad
+	/j1 14018, j2 60461, j3 26666, j4 60047/;
+table CT (j,k) Costos transporte
+		j1	j2	j3	j4
+	j1	45121	97157	77048	61478
+	j2	66506	58266	52151	44430
+	j3	81310	58697	61344	9674
+	j4	570	69099	74258	76364
+;
+table S (j,l) Puntaje de ciudad i por punto de interes
+		l1	l2
+	j1	77441	16358
+	j2	51759	3605
+	j3	83255	36561
+	j4	55739	16560
+;
+table R (j,l) Cantidad de reviews de ciudad i por punto de interes
+		l1	l2
+	j1	11677	99071
+	j2	92418	76006
+	j3	42046	46072
+	j4	66684	22646
+;
+LOOP((j),Puntaje(j)=sum(l,S(j,l)*(R(j,l))**0.5/5););
