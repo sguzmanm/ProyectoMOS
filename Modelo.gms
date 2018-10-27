@@ -1,5 +1,5 @@
-$Set n 2
-$Set d 1
+$Set n 4
+$Set d 3
 $Set maxd2 2
 
 
@@ -14,9 +14,9 @@ Scalars
          inicio Ciudad de inicio
                  /1/
          n       Num ciudades
-                 /2/
+                 /4/
          d Num dias
-                 /1/
+                 /3/
          maxd Max num dias
                  /1/
 
@@ -29,22 +29,28 @@ Scalars
 Parameters
          Puntaje(j)      Puntaje del punto j
          CV(j)    Vida promedio por ciudad
-         /j1 1, j2 1/
+         /j1 1, j2 1,j3 1,j4 1/
        ;
 table CT(j,k)       Costos transporte
-                 j1      j2
-         j1      1       1
-         j2      1       1
+                 j1      j2      j3      j4
+         j1      1       1       1       1
+         j2      1       1       1       1
+         j3      1       1       1       1
+         j4      1       1       1       1
           ;
 table S(j,l) Puntaje de ciudad i por punto de interés l
                  l1      l2
          j1      1       1
          j2      1       1
+         j3      1       1
+         j4      1       1
                  ;
 table R(j,l) Cantidad de reviews de ciudad i por punto de interes l
                  l1      l2
          j1      1       1
          j2      1       1
+         j3      1       1
+         j4      1       1
                    ;
 
 LOOP((j),Puntaje(j)=sum(l,S(j,l)*(R(j,l))**0.5/5););
@@ -72,7 +78,7 @@ noDosCiudades (i)    ..     sum((j),x(i,j) )=e=1;
 primerDia (j)$(ord(j)=inicio)       ..      x('i0',j)=g=1;
 
 Model Modelo /all/;
-option minlp = BARON                 ;
+option minlp = BONMIN                 ;
 Solve Modelo using minlp minimizing obj ;
 Display Puntaje;
 Display obj.l;
