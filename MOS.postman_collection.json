@@ -1,0 +1,129 @@
+{
+	"info": {
+		"_postman_id": "2fd2f4ef-86f3-4c78-80ec-53767b357329",
+		"name": "MOS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Esc Base 1",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Base1\",\n\t\"d\":4,\n\t\"n\":4,\n\t\"maxd\":1,\n\t\"mind\":1,\n\t\"inicio\":1,\n\t\"p1\":1,\n\t\"p2\":0,\n\t\"costoVida\":\"Random\",\n\t\"costoTransporte\":\"Random\",\n\t\"score\":\"Random\",\n\t\"reviews\":\"Random\"\n\t\n}"
+				},
+				"url": "localhost:5000/generateScenario"
+			},
+			"response": []
+		},
+		{
+			"name": "Esc Base 2",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Base2\",\n\t\"d\":8,\n\t\"n\":2,\n\t\"maxd\":5,\n\t\"mind\":3,\n\t\"inicio\":1,\n\t\"p1\":1,\n\t\"p2\":0,\n\t\"costoVida\":\"Random\",\n\t\"costoTransporte\":\"Random\",\n\t\"score\":\"scoresBase2.txt\"\n\t\n}"
+				},
+				"url": "localhost:5000/generateScenario"
+			},
+			"response": []
+		},
+		{
+			"name": "Esc Base 3",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Base3\",\n\t\"d\":8,\n\t\"n\":2,\n\t\"maxd\":5,\n\t\"mind\":3,\n\t\"inicio\":1,\n\t\"p1\":0,\n\t\"p2\":1,\n\t\"costoVida\":\"lifeCostsBase3.txt\",\n\t\"score\":\"Random\",\n\t\"reviews\":\"Random\"\n\t\n}"
+				},
+				"url": "localhost:5000/generateScenario"
+			},
+			"response": []
+		},
+		{
+			"name": "Esc Base 4",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Base4\",\n\t\"d\":3,\n\t\"n\":3,\n\t\"maxd\":1,\n\t\"mind\":1,\n\t\"inicio\":1,\n\t\"p1\":0,\n\t\"p2\":1,\n\t\"costoTransporte\":\"transportCostsBase4.txt\",\n\t\"score\":\"Random\",\n\t\"reviews\":\"Random\"\n\t\n}"
+				},
+				"url": "localhost:5000/generateScenario"
+			},
+			"response": []
+		},
+		{
+			"name": "Esc Medio",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Medium\",\n\t\"d\":15,\n\t\"n\":10,\n\t\"maxd\":13,\n\t\"mind\":1,\n\t\"inicio\":6,\n\t\"p1\":0.5,\n\t\"p2\":0.5,\n\t\"costoVida\":\"lifeCostsMedium.txt\",\n\t\"score\":\"scoresMedium.txt\"\n\t\n}"
+				},
+				"url": "localhost:5000/generateScenario"
+			},
+			"response": []
+		},
+		{
+			"name": "Esc Real",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Base1\",\n\t\"d\":4,\n\t\"n\":4,\n\t\"maxd\":1,\n\t\"mind\":1,\n\t\"inicio\":1,\n\t\"p1\":1,\n\t\"p2\":0,\n\t\"costoVida\":\"Random\",\n\t\"costoTransporte\":\"Random\",\n\t\"score\":\"Random\",\n\t\"reviews\":\"Random\"\n\t\n}"
+				},
+				"url": "localhost:5000/generateScenario"
+			},
+			"response": []
+		}
+	]
+}
