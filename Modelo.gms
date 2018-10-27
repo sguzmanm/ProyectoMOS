@@ -30,7 +30,7 @@ trans       ..      f2=e=sum((i,j,k)$(ord(i)<d and ord(k)<>ord(j)),x(i,j)*x(i+1,
 dias     ..      f1=e=sum( (i,j),(x(i,j)+1) );
 vidaProm ..      f3=e=sum((i,j),x(i,j)*CV(j));
 fObj     ..      obj=e=p1/(sum( (i,j),(x(i,j)+1) ))+p2*(f2+f3 );
-rest_mind (j)     ..      mind=l=sum(i,x(i,j));
+rest_mind (j)     ..      sum(i,x(i,j))*( sum(i,x(i,j))-mind )=g=0;
 rest_maxd (j)        ..    maxd=g=sum(i,x(i,j));
 noDosCiudades (i)    ..     sum((j),x(i,j) )=e=1;
 primerDia (j)$(ord(j)=inicio)       ..      x('i0',j)=e=1;
