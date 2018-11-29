@@ -45,9 +45,10 @@ public class SPEA2 {
 	 * @param R File for the quantity of reviews
 	 * @param S File for the scores of the city
 	 */
-	public SPEA2(int n, int np, int t, int d, int min_d, int max_d, int s,String CV,String CT,String R,String S) {
+	public SPEA2(int N, int np, int t, int n,int d, int min_d, int max_d, int s,String CV,String CT,String R,String S) {
 		super();
-		N = n;
+		this.N = N;
+		this.n=n;
 		Np = np;
 		T = t;
 		this.d = d;
@@ -262,9 +263,9 @@ public class SPEA2 {
 	
 	public static void main (String[] args)
 	{
-		//	int n, int np, int t, int k, int n2, int d, int min_d, int max_d, int s,String CV,String CT,String R,String S
+		//	int n, int np, int t, int d, int min_d, int max_d, int s,String CV,String CT,String R,String S
 
-		SPEA2 spea=new SPEA2(0,0,0,0,0,0,0,0,0,"","","","");
+		SPEA2 spea=new SPEA2(0,0,0,4,0,0,0,"","","","");
 		/*spea.initialization();
 		int t=0;
 		ArrayList<Chromosome> A= null;
