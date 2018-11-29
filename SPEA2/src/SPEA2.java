@@ -165,6 +165,7 @@ public class SPEA2 {
 				if(dominate(i,j))
 					S[index]++;
 			}
+			i.setStrength(S[index]);
 		}
 		//Calculate raw fitness (r)
 		int[] R=new int[union.size()];
@@ -205,6 +206,43 @@ public class SPEA2 {
 	
 	private int environmentalSelection()
 	{
+		
+		Pp = new ArrayList<>();
+		
+		for (Chromosome i : union){
+			//If chromosome is non-dominated
+			if(i.getStrength() == 0){
+				Pp.add(i);
+			}
+		}
+		
+		if(Pp.size() < Np){			
+			union.sort(Chromosome.FITNESS_COMPARATOR);
+			//llenar con elementos de P
+			for(Chromosome i : union){
+				//If the solution is dominated
+				if(i.getStrength() != 0){
+					Pp.add(i);
+				}
+				//Break when Pp meets size requirement 
+				if(Pp.size() == Np){
+					break;
+				}
+			}
+		}
+		else if (Pp.size() > Np){
+			ArrayList<Chromosome> truncatedPp = new ArrayList<>(); 
+			Pp.sort(Chromosome.FITNESS_COMPARATOR);
+			
+			for(Chromosome i : Pp){
+				truncatedPp.add(i);
+				if(truncatedPp.size() == Np){
+					break;
+				}
+			}
+			
+		}
+		
 		return 0;
 	}
 	

@@ -1,3 +1,5 @@
+import java.util.Comparator;
+
 /**
  * Class for the chromosome
  * @author s.guzmanm
@@ -13,6 +15,21 @@ public class Chromosome {
 	private double f1;
 	//F2 Value
 	private double f2;
+	//Strength value (0 = non-dominated)
+	private int strength;
+	
+	//Fitness comparator
+	
+	public static final Comparator<Chromosome> FITNESS_COMPARATOR = new Comparator<Chromosome>() {
+
+		@Override
+		public int compare(Chromosome o1, Chromosome o2) {
+			//10000 times as a small difference might return equality when they're not
+			return (int) Math.round(10000*( o1.fitness - o2.fitness ));
+		}
+		
+	};
+	
 	//Constructor
 	public Chromosome(String code,double f1, double f2)
 	{
@@ -33,6 +50,15 @@ public class Chromosome {
 	{
 		this.fitness=fitness;
 	}
+	
+	public void setStrength(int strength){
+		this.strength = strength;
+	}
+	
+	public int getStrength(){
+		return strength;
+	}
+	
 	//Gets f1 and f2
 	public double getF1()
 	{
