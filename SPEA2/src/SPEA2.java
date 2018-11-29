@@ -40,8 +40,12 @@ public class SPEA2 {
 	
 	/**
 	 * Constructor with given params
+	 * @param CV File name for transport costs
+	 * @param CT File name for living costs per city
+	 * @param R File for the quantity of reviews
+	 * @param S File for the scores of the city
 	 */
-	public SPEA2(int n, int np, int t, int k, int n2, int d, int min_d, int max_d, int s) {
+	public SPEA2(int n, int np, int t, int k, int n2, int d, int min_d, int max_d, int s,String CV,String CT,String R,String S) {
 		super();
 		N = n;
 		Np = np;
@@ -52,12 +56,12 @@ public class SPEA2 {
 		this.min_d = min_d;
 		this.max_d = max_d;
 		this.s = s;
-		initCosts();
+		initCosts(CV,CT,R,S);
 	}
 	
-	private void initCosts()
+	private void initCosts(String CV,String CT,String R,String S)
 	{
-		//TODO 
+		
 	}
 	
 	private void initialization()
