@@ -1,4 +1,6 @@
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 public class SPEA2 {
@@ -27,10 +29,8 @@ public class SPEA2 {
 	private double[][] CT;
 	// Daily costs
 	private double[] CV;
-	// Scores 
-	private double [][] S;
-	// Number of reviews
-	private double [][] R;
+	// Scores using S and R formula
+	private double [] Puntaje;
 	// Population
 	private ArrayList<Chromosome> P=new ArrayList<Chromosome>();
 	// Archivo population
@@ -40,8 +40,8 @@ public class SPEA2 {
 	
 	/**
 	 * Constructor with given params
-	 * @param CV File name for transport costs
-	 * @param CT File name for living costs per city
+	 * @param CV File name for living costs per city
+	 * @param CT File name for transport costs
 	 * @param R File for the quantity of reviews
 	 * @param S File for the scores of the city
 	 */
@@ -61,6 +61,87 @@ public class SPEA2 {
 	
 	private void initCosts(String CV,String CT,String R,String S)
 	{
+		BufferedReader br=null;
+		boolean random=false; //Specify whether the given attribute needs a random matrix or not
+		String temp=null;
+		//Costs of living
+		this.CV=new double[n];
+		if(CV!=null)
+		{
+			random=CV.equals("Random");
+			for(int i=0;i<n;i++)
+				if(random)
+					this.CV[i]=Math.floor(Math.random()*100000);
+				else
+				{
+					try {
+						br=new BufferedReader(new FileReader("./data/"+CV));
+						for(String s:br.readLine().split(" "))
+							this.CV[i]=Double.parseDouble(s);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+					
+		}
+		else
+		{
+			Arrays.fill(this.CV, 1);
+		}
+		//Costs of transport
+		this.CT=new double[n][n];
+		if(CT!=null)
+		{
+			
+		}
+		else
+		{
+			for(int i=0;i<n;i++)
+				Arrays.fill(this.CT[i], 1);
+		}
+		//Quantity of reviews
+		double[][]reviews=new double[n][2*max_d];
+		if(R!=null)
+		{
+			random=CV.equals("Random");
+			for(int i=0;i<n;i++)
+				if(random)
+					this.CV[i]=Math.floor(Math.random()*100000);
+				else
+				{
+					try {
+						br=new BufferedReader(new FileReader("./data/"+CV));
+						for(String s:br.readLine().split(" "))
+							this.CV[i]=Double.parseDouble(s);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+		}
+		else
+		{
+			for(int i=0;i<n;i++)
+				Arrays.fill(reviews[i], 1);
+		}
+		//Quantity of Scores
+		double[][]scores=new double[n][2*max_d];
+		if(S!=null)
+		{
+			
+		}
+		else
+		{
+			for(int i=0;i<n;i++)
+				Arrays.fill(scores[i], 1);
+		}
+		//Calculation of "Puntaje"
+		for(int i=0;i<n;i++)
+		{
+			for(int l=0;l<2*max_d;l++)
+			{
+				Puntaje[i]+=scores[i][l]/5*Math.sqrt(reviews[i][l]);
+			}
+		}
 		
 	}
 	
@@ -153,7 +234,7 @@ public class SPEA2 {
 	
 	public static void main (String[] args)
 	{
-		SPEA2 spea=new SPEA2(0,0,0,0,0,0,0,0,0);
+		SPEA2 spea=new SPEA2(0,0,0,0,0,0,0,0,0,"","","","");
 		spea.initialization();
 		int t=0;
 		ArrayList<Chromosome> A= null;
