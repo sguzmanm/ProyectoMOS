@@ -45,13 +45,12 @@ public class SPEA2 {
 	 * @param R File for the quantity of reviews
 	 * @param S File for the scores of the city
 	 */
-	public SPEA2(int n, int np, int t, int k, int n2, int d, int min_d, int max_d, int s,String CV,String CT,String R,String S) {
+	public SPEA2(int N, int np, int t, int n,int d, int min_d, int max_d, int s,String CV,String CT,String R,String S) {
 		super();
-		N = n;
+		this.N = N;
+		this.n=n;
 		Np = np;
 		T = t;
-		this.k = k;
-		n = n2;
 		this.d = d;
 		this.min_d = min_d;
 		this.max_d = max_d;
@@ -63,7 +62,6 @@ public class SPEA2 {
 	{
 		BufferedReader br=null;
 		boolean random=false; //Specify whether the given attribute needs a random matrix or not
-		String temp=null;
 		//Costs of living
 		this.CV=new double[n];
 		if(CV!=null)
@@ -78,6 +76,7 @@ public class SPEA2 {
 						br=new BufferedReader(new FileReader("./data/"+CV));
 						for(String s:br.readLine().split(" "))
 							this.CV[i]=Double.parseDouble(s);
+						br.close();
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -92,7 +91,8 @@ public class SPEA2 {
 		this.CT=new double[n][n];
 		if(CT!=null)
 		{
-			
+			random=CT.equals("Random");
+			readMatrix(CT, random, this.CT, br);
 		}
 		else
 		{
@@ -103,20 +103,8 @@ public class SPEA2 {
 		double[][]reviews=new double[n][2*max_d];
 		if(R!=null)
 		{
-			random=CV.equals("Random");
-			for(int i=0;i<n;i++)
-				if(random)
-					this.CV[i]=Math.floor(Math.random()*100000);
-				else
-				{
-					try {
-						br=new BufferedReader(new FileReader("./data/"+CV));
-						for(String s:br.readLine().split(" "))
-							this.CV[i]=Double.parseDouble(s);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
+			random=R.equals("Random");
+			readMatrix(R, random, reviews, br);
 		}
 		else
 		{
@@ -127,7 +115,8 @@ public class SPEA2 {
 		double[][]scores=new double[n][2*max_d];
 		if(S!=null)
 		{
-			
+			random=S.equals("Random");
+			readMatrix(S, random, scores, br);
 		}
 		else
 		{
@@ -142,9 +131,49 @@ public class SPEA2 {
 				Puntaje[i]+=scores[i][l]/5*Math.sqrt(reviews[i][l]);
 			}
 		}
+		//Sysout results
+		System.out.println("Life Costs");
+		for(int i=0;i<this.CV.length;i++)
+			System.out.println(this.CV[i]);
+		System.out.println("Transport costs");
+		for(int i=0;i<this.CT.length;i++)
+			for(int j=0;j<this.CT[0].length;j++)
+				System.out.println(this.CT[i][j]);
+		System.out.println("Scores");
+		for(int i=0;i<this.Puntaje.length;i++)
+			System.out.println(this.Puntaje[i]);
 		
 	}
 	
+	private void readMatrix(String matrixLocation, boolean random,double[][] matrix, BufferedReader br)
+	{
+		if(random)
+		{
+			for(int i=0;i<matrix.length;i++)
+				for(int j=0;j<matrix[0].length;j++)
+					matrix[i][j]=Math.floor(Math.random()*100000);
+		}
+		else
+		{
+			try
+			{
+				br=new BufferedReader(new FileReader("./data/"+matrixLocation));
+				for(int i=0;i<matrix.length;i++)
+				{
+					String[] data=br.readLine().split(" ");
+					for(int j=0;j<matrix[0].length;j++)
+						matrix[i][j]=Double.parseDouble(data[j]);
+				}
+				br.close();
+			}
+			catch(IOException e)
+			{
+				e.printStackTrace();
+			}
+			
+		}
+	}
+
 	private void initialization()
 	{
 		// TODO Calculate f1 and f2 for each member of P and Pp
@@ -272,8 +301,10 @@ public class SPEA2 {
 	
 	public static void main (String[] args)
 	{
-		SPEA2 spea=new SPEA2(0,0,0,0,0,0,0,0,0,"","","","");
-		spea.initialization();
+		//	int n, int np, int t, int d, int min_d, int max_d, int s,String CV,String CT,String R,String S
+
+		SPEA2 spea=new SPEA2(0,0,0,4,0,0,0,"","","","");
+		/*spea.initialization();
 		int t=0;
 		ArrayList<Chromosome> A= null;
 		while(t++<spea.T)
@@ -290,7 +321,7 @@ public class SPEA2 {
 		}
 		System.out.println("Solutions");
 		for(Chromosome s:A)
-			System.out.println(s);
+			System.out.println(s);*/
 		
 	}
 	
