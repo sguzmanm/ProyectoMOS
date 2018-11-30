@@ -124,6 +124,7 @@ public class SPEA2 {
 				Arrays.fill(scores[i], 1);
 		}
 		//Calculation of "Puntaje"
+		this.Puntaje=new double[n];
 		for(int i=0;i<n;i++)
 		{
 			for(int l=0;l<2*max_d;l++)
@@ -172,6 +173,24 @@ public class SPEA2 {
 			}
 			
 		}
+	}
+	
+	private static SPEA2 scenario(int N, int Np, int T, int id)
+	{
+		//	int N, int np, int t,int n, int d, int min_d, int max_d, int s,String CV,String CT,String R,String S
+		if(id==1)
+			return new SPEA2(N,Np,T,4,4,1,1,1,"Random","Random","Random","Random");
+		else if (id==2)
+			return new SPEA2(N,Np,T,2,8,3,5,1,"Random","Random",null,"scoresBase2.txt");
+		else if (id==3)
+			return new SPEA2(N,Np,T,2,8,3,5,1,"lifeCostsBase3.txt",null,"Random","Random");
+		else if (id==4)
+			return new SPEA2(N,Np,T,3,3,1,1,1,null,"transportCostsBase4.txt","Random","Random");
+		else if (id==5)
+			return new SPEA2(N,Np,T,10,15,1,13,6,"lifeCostsMedium.txt",null,null,"scoresMedium.txt");
+		else if (id==6)
+			return new SPEA2(N,Np,T,2,8,3,5,1,"Random","Random",null,"scoresBase2.txt");
+		else return null;
 	}
 
 	private void initialization()
@@ -301,9 +320,8 @@ public class SPEA2 {
 	
 	public static void main (String[] args)
 	{
-		//	int n, int np, int t, int d, int min_d, int max_d, int s,String CV,String CT,String R,String S
 
-		SPEA2 spea=new SPEA2(0,0,0,4,0,0,0,"","","","");
+		SPEA2 spea=scenario(0,0,0,5);
 		/*spea.initialization();
 		int t=0;
 		ArrayList<Chromosome> A= null;
