@@ -198,8 +198,45 @@ public class SPEA2 {
 	private void initialization()
 	{
 		// TODO Calculate f1 and f2 for each member of P and Pp
+		this.Pp=new ArrayList<>();
+		String code=null;
+		int temp=0;
+		double f1=0;
+		double f2=0;
+		double avgScores=avgArray(Puntaje);
+		double avgLifeCosts=avgArray(CV);
+		double avgTransportCosts=0;
+		for(int i=0;i<CT.length;i++)
+			avgTransportCosts+=avgArray(CT[i]);
+		avgTransportCosts/=CT.length;
+		String[] data=null;
+		for(int i=0;i<N;i++)
+		{
+			//Allele generation
+			code=s+"";
+			for(int j=1;j<d;j++)
+			{
+				temp=(int)Math.random()*n+1;
+				if(temp>n)
+					temp--;
+				code+="-"+temp;
+			}
+			//F1
+			data=code.split("-");
+			for(int j=0;j<data.length;j++)
+				f1+=Puntaje[Integer.parseInt(data[j])-1];
+			f1=avgScores/(f1+1);
+			//F2
+			//TODO Add f2 val normalized
+			this.P.add(new Chromosome(code,f1,f2));
+		}
 	}
 	
+	private double avgArray(double[] array) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	private void fitnessAssignment()
 	{
 		union= new ArrayList<>();
