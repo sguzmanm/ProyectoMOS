@@ -226,7 +226,7 @@ public class SPEA2 {
 		double avgTransportCosts=0;
 		for(int i=0;i<CT.length;i++)
 			avgTransportCosts+=avgArray(CT[i]);
-		avgTransportCosts/=CT.length;
+		avgTransportCosts/=(CT.length*CT.length);
 		String[] data=null;
 		for(Chromosome chromosome:union)
 		{
@@ -234,7 +234,7 @@ public class SPEA2 {
 			//F1
 			for(int j=0;j<data.length;j++)
 				f1+=Puntaje[Integer.parseInt(data[j])-1];
-			f1=avgScores/(f1+1);
+			f1=(avgScores+1)/(f1+1);
 			//F2
 			for(int j=1;j<data.length;j++)
 			{
