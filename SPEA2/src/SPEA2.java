@@ -11,6 +11,8 @@ public class SPEA2 {
 	private int Np;
 	// Max generations
 	private int T;
+	// Current generation
+	private int t;
 	// Mating pool size divisor
 	private int kp;
 	//Mating pool size (before divisor)
@@ -357,7 +359,60 @@ public class SPEA2 {
 	
 	private void variation()
 	{
+		P = new ArrayList<>();
 		
+		for(int i = 0; i < N; i++) {
+		
+			int a = (int) Math.floor(Math.random()*B.size());
+			int b = a;
+			
+			while(b == a) {
+				b = (int) Math.floor(Math.random()*B.size());
+			}
+			
+			Chromosome offspring = null;
+			double dice = Math.random();
+			
+			if(dice < 5.0/11.0) {
+				offspring = doubleCutCrossover( B.get(a), B.get(b) );
+			}
+			else if (dice < 10.0/11.0) {
+				offspring =  uniformCrossover(B.get(a), B.get(b));
+			}
+			else {
+				offspring = mutation(B.get(a));
+			}
+			
+			P.add(offspring);
+		}
+		//(Pavg, PPavg, unionAvg)
+		double[] stats = calcIterationStats();
+		
+		System.out.println("[t=" + t + "]: \t Pavg = "+ stats[0] + " \t Ppavg = " + stats[1] + " \t unionAvg = " + stats[2]);
+	}
+	
+	private double[] calcIterationStats() {
+		double Pavg = 0, PpAvg = 0, unionAvg = 0;
+		
+		for(Chromosome i: union) {
+			unionAvg += i.getFitness();
+		}
+		
+		unionAvg = unionAvg/union.size();
+		
+		for(Chromosome i: Pp) {
+			PpAvg += i.getFitness();
+		}
+		
+		PpAvg = PpAvg/Pp.size();
+		
+		for(Chromosome i: P) {
+			Pavg += i.getFitness();
+		}
+		
+		Pavg = Pavg/P.size();
+		
+		return new double[]{Pavg, PpAvg, unionAvg};		
 	}
 	
 	private Chromosome doubleCutCrossover(Chromosome a, Chromosome b){
@@ -403,14 +458,25 @@ public class SPEA2 {
 			}
 		}	
 		
-		String code = String.join("-", newCode); 
+		String code = String.join("-", newCode);
 		
-		//TODO calc f1 and f2 for newborn code
 		return new Chromosome(code);
 	}
 	
-	private Chromosome mutation(Chromosome a, Chromosome b){
-		return null;
+	private Chromosome mutation(Chromosome a){
+		
+		String[] codeStr = a.getCode().split("-");
+		
+		for(int i = 0; i < codeStr.length; i++) {
+			
+			if(Math.random() < 0.1) {
+				int newCity = (int) Math.floor(Math.random()*n) + 1;
+				codeStr[i] = Integer.toString(newCity);
+			}
+			
+		}
+		
+		return new Chromosome(String.join("-", codeStr));
 	}
 	
 	

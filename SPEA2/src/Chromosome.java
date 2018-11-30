@@ -75,5 +75,9 @@ public class Chromosome {
 		return "Code: "+code+"("+f1+","+f2+")";
 	}
 	
+	public double getFitness() {
+		return fitness;
+	}
+	
 	
 }
