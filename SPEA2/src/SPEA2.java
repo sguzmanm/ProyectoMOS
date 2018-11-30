@@ -73,20 +73,21 @@ public class SPEA2 {
 		if(CV!=null)
 		{
 			random=CV.equals("Random");
-			for(int i=0;i<n;i++)
-				if(random)
-					this.CV[i]=Math.floor(Math.random()*100000);
-				else
-				{
-					try {
-						br=new BufferedReader(new FileReader("./data/"+CV));
-						for(String s:br.readLine().split(" "))
-							this.CV[i]=Double.parseDouble(s);
-						br.close();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+			if(random)
+				for(int i=0;i<n;i++)
+						this.CV[i]=Math.floor(Math.random()*100000);
+			else
+			{
+				try {
+					br=new BufferedReader(new FileReader("./data/"+CV));
+					int i=0;
+					for(String s:br.readLine().split(" "))
+						this.CV[i++]=Double.parseDouble(s);
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
+			}
 					
 		}
 		else
@@ -190,11 +191,9 @@ public class SPEA2 {
 
 	private void initialization()
 	{
-		// TODO Calculate f1 and f2 for each member of P and Pp
 		this.Pp=new ArrayList<>();
 		String code=null;
 		int temp=0;
-		System.out.println("n "+4);
 		for(int i=0;i<N;i++)
 		{
 			//Allele generation
@@ -229,12 +228,19 @@ public class SPEA2 {
 		//Calculate f1 and f2 for everything
 		double f1=0;
 		double f2=0;
-		double avgScores=avgArray(Puntaje);
-		double avgLifeCosts=avgArray(CV);
-		double avgTransportCosts=0;
+		double minScores=Double.MAX_VALUE;
+		for(int i=0;i<Puntaje.length;i++)
+			if(Puntaje[i]<minScores)
+				minScores=Puntaje[i];
+		double maxLifeCost=0;
+		for(int i=0;i<CV.length;i++)
+			if(CV[i]>maxLifeCost)
+				maxLifeCost=CV[i];
+		double maxTransportCost=0;
 		for(int i=0;i<CT.length;i++)
-			avgTransportCosts+=avgArray(CT[i]);
-		avgTransportCosts/=(CT.length*CT.length);
+			for(int j=0;j<CT[0].length;j++)
+				if(CT[i][j]>maxTransportCost)
+					maxTransportCost=CT[i][j];
 		String[] data=null;
 		for(Chromosome chromosome:union)
 		{
@@ -243,7 +249,7 @@ public class SPEA2 {
 			//F1
 			for(int j=0;j<data.length;j++)
 				f1+=Puntaje[Integer.parseInt(data[j])-1];
-			f1=(avgScores+1)/(f1+1);
+			f1=(minScores*d+1)/(f1+1);
 			//F2
 			for(int j=1;j<data.length;j++)
 			{
@@ -252,7 +258,7 @@ public class SPEA2 {
 				f2+=CV[ini-1]+CT[ini-1][fin-1];
 			}
 			f2+=CV[Integer.parseInt(data[data.length-1])-1];
-			f2/=(avgLifeCosts*d+avgTransportCosts*d/min_d);
+			f2/=(maxLifeCost*d+maxTransportCost*d);
 			chromosome.setF1(f1);
 			chromosome.setF2(f2);
 		}
@@ -357,7 +363,6 @@ public class SPEA2 {
 	private ArrayList<Chromosome> matingSelection()
 	{
 		int matingSize = Math.max(2, Math.min(Np,(int) Math.floor(k/kp)));
-		System.out.println("K "+k+" KP "+kp);
 		//Initialize Mating pool
 		ArrayList<Chromosome> B = new ArrayList<>();
 		
@@ -520,7 +525,7 @@ public class SPEA2 {
 	public static void main (String[] args)
 	{
 
-		SPEA2 spea=scenario(30,6,10000,3,2);
+		SPEA2 spea=scenario(30,6,10000,3,5);
 		spea.initialization();
 		System.out.println("Initialization");
 		int t=0;

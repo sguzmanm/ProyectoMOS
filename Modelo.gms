@@ -1,10 +1,10 @@
 
 $offlisting
-$include C:\Users\Dell\Documents\UNIANDES\MOS\ProyectoMOS\paramsBase1.inc
+$include C:\Users\Dell\Documents\UNIANDES\MOS\ProyectoMOS\paramsMedium.inc
 $onlisting
 
 $offlisting
-$include C:\Users\Dell\Documents\UNIANDES\MOS\ProyectoMOS\tablesBase1.inc
+$include C:\Users\Dell\Documents\UNIANDES\MOS\ProyectoMOS\tablesMedium.inc
 $onlisting
 
 Variables
@@ -27,9 +27,9 @@ Equations
 
 
 trans       ..      f2=e=sum((i,j,k)$(ord(i)<d and ord(k)<>ord(j)),x(i,j)*x(i+1,k)*CT(j,k)) ;
-dias     ..      f1=e=(sum( (i,j),(x(i,j)*Puntaje(j)) )+1)/(((sum( (j),Puntaje(j)))+1)/n);
+dias     ..      f1=e=(((sum( (j),Puntaje(j)))+1)/n)/(sum( (i,j),(x(i,j)*Puntaje(j)) )+1);
 vidaProm ..      f3=e=sum((i,j),x(i,j)*CV(j));
-fObj     ..      obj=e=p1*(((sum( (j),Puntaje(j)))+1)/n)/(sum( (i,j),(x(i,j)*Puntaje(j)))+1)+p2*(f2+f3 )/(sum(j,CV(j))/n*d+sum((j,k),CT(j,k))/(n*n)*d/mind);
+fObj     ..      obj=e=p1*f1+p2*(f2+f3 )/(smax(j,CV(j))*d+smax((j,k),CT(j,k))*d);
 rest_mind (j)     ..      sum(i,x(i,j))*( sum(i,x(i,j))-mind )=g=0;
 rest_maxd (j)        ..    maxd=g=sum(i,x(i,j));
 noDosCiudades (i)    ..     sum((j),x(i,j) )=e=1;
@@ -40,6 +40,8 @@ option minlp = COUENNE                 ;
 Solve Modelo using minlp minimizing obj ;
 Display CV;
 Display Puntaje;
+Display R;
+Display S;
 Display inicio;
 Display mind;
 Display maxd;
