@@ -318,6 +318,59 @@ public class SPEA2 {
 		
 	}
 	
+	private Chromosome doubleCutCrossover(Chromosome a, Chromosome b){
+		
+		//Choose two random numbers between 0 and the half of the days
+		int i = (int) Math.floor( Math.random() * d/2 );
+		int j = (int) Math.floor( Math.random() * d/2 );
+		
+		String[] aStr = a.getCode().split("-");
+		String[] bStr = b.getCode().split("-");
+		
+		String[] newCode = new String[aStr.length];
+		
+		for(int index = 0; index < i; index++){
+			newCode[index] = aStr[index];
+		}
+		
+		for(int index = i; index < j; index++){
+			newCode[index] = bStr[index];
+		}
+		
+		for(int index = j; index < aStr.length; index++){
+			newCode[index] = aStr[index];
+		}
+		
+		//TODO calc f1 and f2 for newborn code
+		return new Chromosome(String.join("-", newCode), -1, -1);
+	}
+	
+	private Chromosome uniformCrossover(Chromosome a, Chromosome b){
+		
+		String[] aStr = a.getCode().split("-");
+		String[] bStr = b.getCode().split("-");
+		
+		String[] newCode = new String[aStr.length];
+		
+		for(int index = 0; index < aStr.length; index++){
+			if(Math.random() > 0.5){
+				newCode[index] = aStr[index];
+			}
+			else{
+				newCode[index] = bStr[index];
+			}
+		}	
+		
+		String code = String.join("-", newCode); 
+		
+		//TODO calc f1 and f2 for newborn code
+		return new Chromosome(code, -1, -1);
+	}
+	
+	private Chromosome mutation(Chromosome a, Chromosome b){
+		return null;
+	}
+	
 	
 	
 	private double distance(Chromosome i, Chromosome j)

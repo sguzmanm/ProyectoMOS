@@ -70,5 +70,9 @@ public class Chromosome {
 		return f2;
 	}
 	
+	public String getCode(){
+		return this.code;
+	}
+	
 	
 }
