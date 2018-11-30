@@ -41,6 +41,7 @@ public class Chromosome {
 	public void setF1(double f1) {
 		this.f1=f1;
 	}
+	
 	//Set the fitness of the chromosome
 	public void setFitness(double fitness)
 	{

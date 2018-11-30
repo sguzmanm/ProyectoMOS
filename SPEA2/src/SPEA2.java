@@ -1,4 +1,5 @@
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -49,7 +50,7 @@ public class SPEA2 {
 	 * @param R File for the quantity of reviews
 	 * @param S File for the scores of the city
 	 */
-	public SPEA2(int N, int np, int t, int n,int d, int min_d, int max_d, int s,String CV,String CT,String R,String S) {
+	public SPEA2(int N, int np, int t,int kp, int n,int d, int min_d, int max_d, int s,String CV,String CT,String R,String S) {
 		super();
 		this.N = N;
 		this.n=n;
@@ -60,6 +61,7 @@ public class SPEA2 {
 		this.max_d = max_d;
 		this.s = s;
 		initCosts(CV,CT,R,S);
+		this.kp=kp;
 	}
 	
 	private void initCosts(String CV,String CT,String R,String S)
@@ -168,21 +170,21 @@ public class SPEA2 {
 		}
 	}
 	
-	private static SPEA2 scenario(int N, int Np, int T, int id)
+	private static SPEA2 scenario(int N, int Np, int T,int kp, int id)
 	{
 		//	int N, int np, int t,int n, int d, int min_d, int max_d, int s,String CV,String CT,String R,String S
 		if(id==1)
-			return new SPEA2(N,Np,T,4,4,1,1,1,"Random","Random","Random","Random");
+			return new SPEA2(N,Np,T,kp,4,4,1,1,1,"Random","Random","Random","Random");
 		else if (id==2)
-			return new SPEA2(N,Np,T,2,8,3,5,1,"Random","Random",null,"scoresBase2.txt");
+			return new SPEA2(N,Np,T,kp,2,8,3,5,1,"Random","Random",null,"scoresBase2.txt");
 		else if (id==3)
-			return new SPEA2(N,Np,T,2,8,3,5,1,"lifeCostsBase3.txt",null,"Random","Random");
+			return new SPEA2(N,Np,T,kp,2,8,3,5,1,"lifeCostsBase3.txt",null,"Random","Random");
 		else if (id==4)
-			return new SPEA2(N,Np,T,3,3,1,1,1,null,"transportCostsBase4.txt","Random","Random");
+			return new SPEA2(N,Np,T,kp,3,3,1,1,1,null,"transportCostsBase4.txt","Random","Random");
 		else if (id==5)
-			return new SPEA2(N,Np,T,10,15,1,13,6,"lifeCostsMedium.txt",null,null,"scoresMedium.txt");
+			return new SPEA2(N,Np,T,kp,10,15,1,13,6,"lifeCostsMedium.txt",null,null,"scoresMedium.txt");
 		else if (id==6)
-			return new SPEA2(N,Np,T,2,8,3,5,1,"Random","Random",null,"scoresBase2.txt");
+			return new SPEA2(N,Np,T,kp,2,8,3,5,1,"Random","Random",null,"scoresBase2.txt");
 		else return null;
 	}
 
@@ -220,6 +222,7 @@ public class SPEA2 {
 		union= new ArrayList<>();
 		union.addAll(P);
 		union.addAll(Pp);
+		
 		//Calculate f1 and f2 for everything
 		double f1=0;
 		double f2=0;
@@ -233,6 +236,7 @@ public class SPEA2 {
 		for(Chromosome chromosome:union)
 		{
 			String code=chromosome.getCode();
+			data=code.split("-");
 			//F1
 			for(int j=0;j<data.length;j++)
 				f1+=Puntaje[Integer.parseInt(data[j])-1];
@@ -242,9 +246,9 @@ public class SPEA2 {
 			{
 				int ini=Integer.parseInt(data[j-1]);
 				int fin=Integer.parseInt(data[j]);
-				f2+=CV[ini]+CT[ini][fin];
+				f2+=CV[ini-1]+CT[ini-1][fin-1];
 			}
-			f2+=CV[Integer.parseInt(data[data.length-1])];
+			f2+=CV[Integer.parseInt(data[data.length-1])-1];
 			f2/=(avgLifeCosts*d+avgTransportCosts*d/min_d);
 			chromosome.setF1(f1);
 			chromosome.setF2(f2);
@@ -276,7 +280,7 @@ public class SPEA2 {
 			}
 		}
 		//Calculate distance (D)
-		ArrayList<Double>[] sigma=(ArrayList<Double>[])new Object[union.size()];
+		ArrayList<Double>[] sigma=new ArrayList[union.size()];
 		int k=(int) Math.floor(Math.sqrt(union.size()));
 		double[]D=new double[union.size()];
 		for(int i=0;i<union.size();i++)
@@ -296,6 +300,10 @@ public class SPEA2 {
 		{
 			union.get(i).setFitness(R[i]+D[i]);
 		}
+		
+		double[] stats = calcIterationStats();
+		System.out.println("[t=" + t + "]: \t Pavg = "+ stats[0] + " \t Ppavg = " + stats[1] + " \t unionAvg = " + stats[2]);
+
 	}
 	
 	private int environmentalSelection()
@@ -337,7 +345,7 @@ public class SPEA2 {
 					break;
 				}
 			}
-			
+			Pp=truncatedPp;
 		}
 		
 		return k;
@@ -345,8 +353,8 @@ public class SPEA2 {
 	
 	private ArrayList<Chromosome> matingSelection()
 	{
-		int matingSize = Math.max(2, (int) Math.floor(k/kp));
-		
+		int matingSize = Math.max(2, Math.min(Np,(int) Math.floor(k/kp)));
+		System.out.println("K "+k+" KP "+kp);
 		//Initialize Mating pool
 		ArrayList<Chromosome> B = new ArrayList<>();
 		
@@ -385,10 +393,6 @@ public class SPEA2 {
 			
 			P.add(offspring);
 		}
-		//(Pavg, PPavg, unionAvg)
-		double[] stats = calcIterationStats();
-		
-		System.out.println("[t=" + t + "]: \t Pavg = "+ stats[0] + " \t Ppavg = " + stats[1] + " \t unionAvg = " + stats[2]);
 	}
 	
 	private double[] calcIterationStats() {
@@ -412,7 +416,7 @@ public class SPEA2 {
 		
 		Pavg = Pavg/P.size();
 		
-		return new double[]{Pavg, PpAvg, unionAvg};		
+		return new double[]{Pavg, PpAvg, unionAvg,P.size(),Pp.size()};		
 	}
 	
 	private Chromosome doubleCutCrossover(Chromosome a, Chromosome b){
@@ -496,25 +500,32 @@ public class SPEA2 {
 	public static void main (String[] args)
 	{
 
-		SPEA2 spea=scenario(10,2,1,1);
+		SPEA2 spea=scenario(20,5,10000,3,5);
 		spea.initialization();
-		/*int t=0;
+		System.out.println("Initialization");
+		int t=0;
 		ArrayList<Chromosome> A= null;
 		while(t++<spea.T)
 		{
+			System.out.println("Gen "+(t-1));
+			//(Pavg, PPavg, unionAvg)
 			spea.fitnessAssignment();
+			System.out.println("Fitness Assignment");
 			spea.k=spea.environmentalSelection();
+			System.out.println("Environmental Selection");
 			if(t>=spea.T)
 			{
 				A=spea.Pp;
 				continue;
 			}
 			spea.B=spea.matingSelection();
+			System.out.println("Mating selection");
 			spea.variation();
+			System.out.println("Variation");
 		}
 		System.out.println("Solutions");
 		for(Chromosome s:A)
-			System.out.println(s);*/
+			System.out.println(s);
 		
 	}
 	
