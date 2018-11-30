@@ -31,19 +31,15 @@ public class Chromosome {
 	};
 	
 	//Constructor
-	public Chromosome(String code,double f1, double f2)
+	public Chromosome(String code)
 	{
 		this.code=code;
-		this.f1=f1;
+	}
+	public void setF2(double f2) {
 		this.f2=f2;
 	}
-	private void calculateF2() {
-		// TODO Auto-generated method stub
-		
-	}
-	private void calculateF1() {
-		// TODO Auto-generated method stub
-		
+	public void setF1(double f1) {
+		this.f1=f1;
 	}
 	//Set the fitness of the chromosome
 	public void setFitness(double fitness)
@@ -72,6 +68,11 @@ public class Chromosome {
 	
 	public String getCode(){
 		return this.code;
+	}
+	
+	public String toString()
+	{
+		return "Code: "+code+"("+f1+","+f2+")";
 	}
 	
 	

@@ -134,17 +134,6 @@ public class SPEA2 {
 				Puntaje[i]+=scores[i][l]/5*Math.sqrt(reviews[i][l]);
 			}
 		}
-		//Sysout results
-		System.out.println("Life Costs");
-		for(int i=0;i<this.CV.length;i++)
-			System.out.println(this.CV[i]);
-		System.out.println("Transport costs");
-		for(int i=0;i<this.CT.length;i++)
-			for(int j=0;j<this.CT[0].length;j++)
-				System.out.println(this.CT[i][j]);
-		System.out.println("Scores");
-		for(int i=0;i<this.Puntaje.length;i++)
-			System.out.println(this.Puntaje[i]);
 		
 	}
 	
@@ -201,6 +190,35 @@ public class SPEA2 {
 		this.Pp=new ArrayList<>();
 		String code=null;
 		int temp=0;
+		System.out.println("n "+4);
+		for(int i=0;i<N;i++)
+		{
+			//Allele generation
+			code=s+"";
+			for(int j=1;j<d;j++)
+			{
+				temp=(int)(Math.random()*n)+1;
+				if(temp>n)
+					temp--;
+				code+="-"+temp;
+			}
+			this.P.add(new Chromosome(code));
+		}
+	}
+	
+	private double avgArray(double[] array) {
+		double ans=0;
+		for(int i=0;i<array.length;i++)
+			ans+=array[i];
+		return ans/array.length;
+	}
+
+	private void fitnessAssignment()
+	{
+		union= new ArrayList<>();
+		union.addAll(P);
+		union.addAll(Pp);
+		//Calculate f1 and f2 for everything
 		double f1=0;
 		double f2=0;
 		double avgScores=avgArray(Puntaje);
@@ -210,38 +228,25 @@ public class SPEA2 {
 			avgTransportCosts+=avgArray(CT[i]);
 		avgTransportCosts/=CT.length;
 		String[] data=null;
-		for(int i=0;i<N;i++)
+		for(Chromosome chromosome:union)
 		{
-			//Allele generation
-			code=s+"";
-			for(int j=1;j<d;j++)
-			{
-				temp=(int)Math.random()*n+1;
-				if(temp>n)
-					temp--;
-				code+="-"+temp;
-			}
+			String code=chromosome.getCode();
 			//F1
-			data=code.split("-");
 			for(int j=0;j<data.length;j++)
 				f1+=Puntaje[Integer.parseInt(data[j])-1];
 			f1=avgScores/(f1+1);
 			//F2
-			//TODO Add f2 val normalized
-			this.P.add(new Chromosome(code,f1,f2));
+			for(int j=1;j<data.length;j++)
+			{
+				int ini=Integer.parseInt(data[j-1]);
+				int fin=Integer.parseInt(data[j]);
+				f2+=CV[ini]+CT[ini][fin];
+			}
+			f2+=CV[Integer.parseInt(data[data.length-1])];
+			f2/=(avgLifeCosts*d+avgTransportCosts*d/min_d);
+			chromosome.setF1(f1);
+			chromosome.setF2(f2);
 		}
-	}
-	
-	private double avgArray(double[] array) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	private void fitnessAssignment()
-	{
-		union= new ArrayList<>();
-		union.addAll(P);
-		union.addAll(Pp);
 		//Calculate strengths (s)
 		int[] S=new int[union.size()];
 		for(int index=0;index<union.size();index++)
@@ -379,7 +384,7 @@ public class SPEA2 {
 		}
 		
 		//TODO calc f1 and f2 for newborn code
-		return new Chromosome(String.join("-", newCode), -1, -1);
+		return new Chromosome(String.join("-", newCode));
 	}
 	
 	private Chromosome uniformCrossover(Chromosome a, Chromosome b){
@@ -401,7 +406,7 @@ public class SPEA2 {
 		String code = String.join("-", newCode); 
 		
 		//TODO calc f1 and f2 for newborn code
-		return new Chromosome(code, -1, -1);
+		return new Chromosome(code);
 	}
 	
 	private Chromosome mutation(Chromosome a, Chromosome b){
@@ -425,9 +430,9 @@ public class SPEA2 {
 	public static void main (String[] args)
 	{
 
-		SPEA2 spea=scenario(0,0,0,5);
-		/*spea.initialization();
-		int t=0;
+		SPEA2 spea=scenario(10,2,1,1);
+		spea.initialization();
+		/*int t=0;
 		ArrayList<Chromosome> A= null;
 		while(t++<spea.T)
 		{
