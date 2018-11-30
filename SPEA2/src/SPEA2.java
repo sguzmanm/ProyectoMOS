@@ -235,7 +235,8 @@ public class SPEA2 {
 	
 	private int environmentalSelection()
 	{
-		
+		//Return value (number of non-dominated solutions in union)
+		int k = -1;
 		Pp = new ArrayList<>();
 		
 		for (Chromosome i : union){
@@ -244,6 +245,8 @@ public class SPEA2 {
 				Pp.add(i);
 			}
 		}
+		
+		k = Pp.size();
 		
 		if(Pp.size() < Np){			
 			union.sort(Chromosome.FITNESS_COMPARATOR);
@@ -272,7 +275,7 @@ public class SPEA2 {
 			
 		}
 		
-		return 0;
+		return k;
 	}
 	
 	private ArrayList<Chromosome> matingSelection()
