@@ -206,7 +206,10 @@ public class SPEA2 {
 					temp--;
 				code+="-"+temp;
 			}
-			this.P.add(new Chromosome(code));
+			if(isValid(code))
+				this.P.add(new Chromosome(code));
+			else
+				i--;
 		}
 	}
 	
@@ -390,8 +393,10 @@ public class SPEA2 {
 			else {
 				offspring = mutation(B.get(a));
 			}
-			
-			P.add(offspring);
+			if(isValid(offspring.getCode()))
+				P.add(offspring);
+			else
+				i--;
 		}
 	}
 	
@@ -497,10 +502,25 @@ public class SPEA2 {
 		return i.getF1()<j.getF1() && i.getF2()<j.getF2();
 	}
 	
+	private boolean isValid(String code)
+	{
+		String[] data= code.split("-");
+		int[] quantity=new int[n];
+		for(String s:data)
+		{
+			quantity[Integer.parseInt(s)-1]++;
+		}
+		for(int i=0;i<n;i++)
+			if(quantity[i]!=0 && (quantity[i]<min_d || quantity[i]>max_d))
+				return false;
+		return true;
+			
+	}
+	
 	public static void main (String[] args)
 	{
 
-		SPEA2 spea=scenario(20,5,10000,3,5);
+		SPEA2 spea=scenario(30,6,10000,3,2);
 		spea.initialization();
 		System.out.println("Initialization");
 		int t=0;
