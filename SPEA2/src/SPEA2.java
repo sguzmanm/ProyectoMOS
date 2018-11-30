@@ -12,6 +12,8 @@ public class SPEA2 {
 	// Max generations
 	private int T;
 	// Mating pool size divisor
+	private int kp;
+	//Mating pool size (before divisor)
 	private int k;
 	// Mating pool
 	private ArrayList<Chromosome> B;
@@ -299,7 +301,16 @@ public class SPEA2 {
 	
 	private ArrayList<Chromosome> matingSelection()
 	{
-		return null;
+		int matingSize = Math.max(2, (int) Math.floor(k/kp));
+		
+		//Initialize Mating pool
+		ArrayList<Chromosome> B = new ArrayList<>();
+		
+		for(int i = 0; i < matingSize; i++){
+			B.add(Pp.get(i));
+		}
+		
+		return B;
 	}
 	
 	private void variation()
