@@ -70,25 +70,18 @@ public class SPEA2 {
 		boolean random=false; //Specify whether the given attribute needs a random matrix or not
 		//Costs of living
 		this.CV=new double[n];
+		String fileName="";
 		if(CV!=null)
 		{
-			random=CV.equals("Random");
-			if(random)
-				for(int i=0;i<n;i++)
-						this.CV[i]=Math.floor(Math.random()*100000);
-			else
-			{
-				try {
-					br=new BufferedReader(new FileReader("./data/"+CV));
-					int i=0;
-					for(String s:br.readLine().split(" "))
-						this.CV[i++]=Double.parseDouble(s);
-					br.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+			try {
+				br=new BufferedReader(new FileReader("./data/"+CV));
+				int i=0;
+				for(String s:br.readLine().split(" "))
+					this.CV[i++]=Double.parseDouble(s);
+				br.close();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-					
 		}
 		else
 		{
@@ -144,30 +137,20 @@ public class SPEA2 {
 	
 	private void readMatrix(String matrixLocation, boolean random,double[][] matrix, BufferedReader br)
 	{
-		if(random)
+		try
 		{
+			br=new BufferedReader(new FileReader("./data/"+matrixLocation));
 			for(int i=0;i<matrix.length;i++)
+			{
+				String[] data=br.readLine().split(" ");
 				for(int j=0;j<matrix[0].length;j++)
-					matrix[i][j]=Math.floor(Math.random()*100000);
+					matrix[i][j]=Double.parseDouble(data[j]);
+			}
+			br.close();
 		}
-		else
+		catch(IOException e)
 		{
-			try
-			{
-				br=new BufferedReader(new FileReader("./data/"+matrixLocation));
-				for(int i=0;i<matrix.length;i++)
-				{
-					String[] data=br.readLine().split(" ");
-					for(int j=0;j<matrix[0].length;j++)
-						matrix[i][j]=Double.parseDouble(data[j]);
-				}
-				br.close();
-			}
-			catch(IOException e)
-			{
-				e.printStackTrace();
-			}
-			
+			e.printStackTrace();
 		}
 	}
 	
@@ -175,17 +158,17 @@ public class SPEA2 {
 	{
 		//	int N, int np, int t,int n, int d, int min_d, int max_d, int s,String CV,String CT,String R,String S
 		if(id==1)
-			return new SPEA2(N,Np,T,kp,4,4,1,1,1,"Random","Random","Random","Random");
+			return new SPEA2(N,Np,T,kp,4,4,1,1,1,"random_lifeCostsBase1.txt","random_transportCostsBase1.txt","random_reviewsBase1.txt","random_scoresBase1.txt");
 		else if (id==2)
-			return new SPEA2(N,Np,T,kp,2,8,3,5,1,"Random","Random",null,"scoresBase2.txt");
+			return new SPEA2(N,Np,T,kp,2,8,3,5,1,"random_lifeCostsBase2.txt","random_transportCostsBase2.txt",null,"scoresBase2.txt");
 		else if (id==3)
-			return new SPEA2(N,Np,T,kp,2,8,3,5,1,"lifeCostsBase3.txt",null,"Random","Random");
+			return new SPEA2(N,Np,T,kp,2,8,3,5,1,"lifeCostsBase3.txt",null,"random_reviewsBase3.txt","random_scoresBase3.txt");
 		else if (id==4)
-			return new SPEA2(N,Np,T,kp,3,3,1,1,1,null,"transportCostsBase4.txt","Random","Random");
+			return new SPEA2(N,Np,T,kp,3,3,1,1,1,null,"transportCostsBase4.txt","random_reviewsBase4.txt","random_scoresBase4.txt");
 		else if (id==5)
 			return new SPEA2(N,Np,T,kp,10,15,1,13,6,"lifeCostsMedium.txt",null,null,"scoresMedium.txt");
 		else if (id==6)
-			return new SPEA2(N,Np,T,kp,2,8,3,5,1,"Random","Random",null,"scoresBase2.txt");
+			return new SPEA2(N,Np,T,kp,2,8,3,5,1,"Random","Random",null,"scoresBase2.txt"); // TODO EDIT WITH REAL SCENARIO
 		else return null;
 	}
 
@@ -525,7 +508,7 @@ public class SPEA2 {
 	public static void main (String[] args)
 	{
 
-		SPEA2 spea=scenario(30,6,10000,3,5);
+		SPEA2 spea=scenario(100,25,10000,10,5);
 		spea.initialization();
 		System.out.println("Initialization");
 		int t=0;

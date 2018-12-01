@@ -1,10 +1,10 @@
 
 $offlisting
-$include C:\Users\Dell\Documents\UNIANDES\MOS\ProyectoMOS\paramsBase2.inc
+$include C:\Users\Dell\Documents\UNIANDES\MOS\ProyectoMOS\datos\paramsBase4.inc
 $onlisting
 
 $offlisting
-$include C:\Users\Dell\Documents\UNIANDES\MOS\ProyectoMOS\tablesBase2.inc
+$include C:\Users\Dell\Documents\UNIANDES\MOS\ProyectoMOS\datos\tablesBase4.inc
 $onlisting
 
 

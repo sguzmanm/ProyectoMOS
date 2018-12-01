@@ -27,8 +27,14 @@ def generateTables(req_data):
     CV=[]
     if costoVida!=None:
         if costoVida=='Random':
-            for i in range(0,n):
+            CV.append(randint(1,100000))
+            temp=str(CV[0])
+            for i in range(1,n):
                 CV.append(randint(1,100000))
+                temp=temp+" "+str(CV[i])
+            f=open("random_lifeCosts"+req_data['nombre']+".txt",'w')
+            f.writelines(temp)
+            f.close
         else:
             #Leer de un archivo el costo de vida por ciudad
             f = open(costoVida, "r")
@@ -58,7 +64,7 @@ def generateTables(req_data):
         msg+="\tj"+str(j+1)
     msg+="\n"
     costoTransporte=req_data.get('costoTransporte')
-    CT=createMatrix(costoTransporte,n,n)
+    CT=createMatrix(costoTransporte,n,n,"random_transportCosts"+req_data['nombre'])
     for j in range(0,n):
         msg+="\tj"+str(j+1)
         for k in range (0,n):
@@ -74,7 +80,7 @@ def generateTables(req_data):
         msg+="\tl"+str(l+1)
     msg+="\n"
     score=req_data.get('score')
-    S=createMatrix(score,n,limRatings)
+    S=createMatrix(score,n,limRatings,"random_scores"+req_data['nombre'])
 
     for j in range(0,n):
         msg+="\tj"+str(j+1)
@@ -90,7 +96,7 @@ def generateTables(req_data):
         msg+="\tl"+str(l+1)
     msg+="\n"
     reviews=req_data.get('reviews')
-    R=createMatrix(reviews,n,limRatings)
+    R=createMatrix(reviews,n,limRatings,"random_reviews"+req_data['nombre'])
     for j in range(0,n):
         msg+="\tj"+str(j+1)
         for l in range (0,limRatings):
@@ -105,7 +111,7 @@ def generateTables(req_data):
     f.writelines(sec)
     f.close()
     
-def createMatrix(fileName,dim1,dim2):
+def createMatrix(fileName,dim1,dim2,name):
     mat=[]
     if fileName!=None:
         if fileName=='Random':
@@ -113,6 +119,15 @@ def createMatrix(fileName,dim1,dim2):
                 mat.append([])
                 for k in range (0,dim2):
                     mat[j].append(randint(1,100000))
+            f=open(name+".txt",'w')
+            temp=""
+            for j in range(0,dim1):
+                temp=str(mat[j][0])
+                for k in range (1,dim2):
+                    temp2=str(mat[j][k])
+                    temp=temp+" "+temp2
+                f.writelines(temp+"\n")
+            f.close()
         else:
             #Leer de un archivo el costo de vida por ciudad
             f = open(fileName, "r")

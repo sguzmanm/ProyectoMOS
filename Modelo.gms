@@ -1,10 +1,10 @@
 
 $offlisting
-$include C:\Users\Dell\Documents\UNIANDES\MOS\ProyectoMOS\paramsMedium.inc
+$include C:\Users\Dell\Documents\UNIANDES\MOS\ProyectoMOS\datos\paramsBase4.inc
 $onlisting
 
 $offlisting
-$include C:\Users\Dell\Documents\UNIANDES\MOS\ProyectoMOS\tablesMedium.inc
+$include C:\Users\Dell\Documents\UNIANDES\MOS\ProyectoMOS\datos\tablesBase4.inc
 $onlisting
 
 Variables
@@ -27,7 +27,7 @@ Equations
 
 
 trans       ..      f2=e=sum((i,j,k)$(ord(i)<d and ord(k)<>ord(j)),x(i,j)*x(i+1,k)*CT(j,k)) ;
-dias     ..      f1=e=(((sum( (j),Puntaje(j)))+1)/n)/(sum( (i,j),(x(i,j)*Puntaje(j)) )+1);
+dias     ..      f1=e=(smin(j,Puntaje(j))*d+1)/(sum( (i,j),(x(i,j)*Puntaje(j)) )+1);
 vidaProm ..      f3=e=sum((i,j),x(i,j)*CV(j));
 fObj     ..      obj=e=p1*f1+p2*(f2+f3 )/(smax(j,CV(j))*d+smax((j,k),CT(j,k))*d);
 rest_mind (j)     ..      sum(i,x(i,j))*( sum(i,x(i,j))-mind )=g=0;

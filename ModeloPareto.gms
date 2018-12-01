@@ -1,10 +1,10 @@
 
 $offlisting
-$include C:\Users\Dell\Documents\UNIANDES\MOS\ProyectoMOS\paramsMedium.inc
+$include C:\Users\Dell\Documents\UNIANDES\MOS\ProyectoMOS\datos\paramsMedium.inc
 $onlisting
 
 $offlisting
-$include C:\Users\Dell\Documents\UNIANDES\MOS\ProyectoMOS\tablesMedium.inc
+$include C:\Users\Dell\Documents\UNIANDES\MOS\ProyectoMOS\datos\tablesMedium.inc
 $onlisting
 
 

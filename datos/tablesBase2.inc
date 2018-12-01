@@ -1,11 +1,11 @@
 Parameters
 	Puntaje(j) Puntaje del punto j
  	CV(j) Vida promedio por ciudad
-	/j1 65971, j2 16631/;
+	/j1 13157, j2 98657/;
 table CT (j,k) Costos transporte
 		j1	j2
-	j1	40473	17447
-	j2	68331	34479
+	j1	62268	73580
+	j2	61092	95479
 ;
 table S (j,l) Puntaje de ciudad i por punto de interes
 		l1	l2	l3	l4	l5	l6	l7	l8	l9	l10
