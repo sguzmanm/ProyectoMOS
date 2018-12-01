@@ -1,10 +1,10 @@
 
 $offlisting
-$include C:\Users\Dell\Documents\UNIANDES\MOS\ProyectoMOS\datos\paramsBase2.inc
+$include C:\Users\Dell\Documents\UNIANDES\MOS\ProyectoMOS\datos\paramsReal.inc
 $onlisting
 
 $offlisting
-$include C:\Users\Dell\Documents\UNIANDES\MOS\ProyectoMOS\datos\tablesBase2.inc
+$include C:\Users\Dell\Documents\UNIANDES\MOS\ProyectoMOS\datos\tablesReal.inc
 $onlisting
 
 Variables
@@ -36,7 +36,7 @@ noDosCiudades (i)    ..     sum((j),x(i,j) )=e=1;
 primerDia (j)$(ord(j)=inicio)       ..      x('i0',j)=e=1;
 
 Model Modelo /all/;
-option minlp = COUENNE                 ;
+option minlp = BONMIN                 ;
 Solve Modelo using minlp minimizing obj ;
 Display CV;
 Display Puntaje;
