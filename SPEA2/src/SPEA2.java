@@ -508,7 +508,7 @@ public class SPEA2 {
 	public static void main (String[] args)
 	{
 
-		SPEA2 spea=scenario(100,25,10000,10,5);
+		SPEA2 spea=scenario(30,6,10,3,5);
 		spea.initialization();
 		System.out.println("Initialization");
 		int t=0;
