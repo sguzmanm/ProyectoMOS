@@ -168,7 +168,7 @@ public class SPEA2 {
 		else if (id==5)
 			return new SPEA2(N,Np,T,kp,10,15,1,13,6,"lifeCostsMedium.txt",null,null,"scoresMedium.txt");
 		else if (id==6)
-			return new SPEA2(N,Np,T,kp,2,8,3,5,1,"Random","Random",null,"scoresBase2.txt"); // TODO EDIT WITH REAL SCENARIO
+			return new SPEA2(N,Np,T,kp,16,50,2,5,1,"lifeCostsReal.txt","transportCostsReal.txt","reviewsReal.txt","scoresReal.txt");
 		else return null;
 	}
 

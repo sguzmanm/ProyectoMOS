@@ -119,7 +119,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\":\"Base1\",\n\t\"d\":4,\n\t\"n\":4,\n\t\"maxd\":1,\n\t\"mind\":1,\n\t\"inicio\":1,\n\t\"p1\":1,\n\t\"p2\":0,\n\t\"costoVida\":\"Random\",\n\t\"costoTransporte\":\"Random\",\n\t\"score\":\"Random\",\n\t\"reviews\":\"Random\"\n\t\n}"
+					"raw": "{\n\t\"nombre\":\"Real\",\n\t\"d\":50,\n\t\"n\":16,\n\t\"maxd\":5,\n\t\"mind\":2,\n\t\"inicio\":1,\n\t\"p1\":0.5,\n\t\"p2\":0.5,\n\t\"costoVida\":\"lifeCostsReal.txt\",\n\t\"costoTransporte\":\"transportCostsReal.txt\",\n\t\"score\":\"scoresReal.txt\",\n\t\"reviews\":\"reviewsReal.txt\"\n\t\n}"
 				},
 				"url": "localhost:5000/generateScenario"
 			},
