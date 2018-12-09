@@ -188,8 +188,11 @@ public class SPEA2 {
 					temp--;
 				code+="-"+temp;
 			}
-			if(isValid(code))
-				this.P.add(new Chromosome(code));
+			if(isValid(code)) {
+//				P.add(new Chromosome(code));
+				if(!addTo(P, new Chromosome(code)))
+					i--;
+			}
 			else
 				i--;
 		}
@@ -205,8 +208,17 @@ public class SPEA2 {
 	private void fitnessAssignment()
 	{
 		union= new ArrayList<>();
-		union.addAll(P);
-		union.addAll(Pp);
+		//union.addAll(P);
+		
+		for(Chromosome i : P) {
+			addTo(union, i);
+		}
+		
+		//union.addAll(Pp);
+		
+		for(Chromosome i : Pp) {
+			addTo(union, i);
+		}
 		
 		//Calculate f1 and f2 for everything
 		double f1=0;
@@ -307,7 +319,8 @@ public class SPEA2 {
 		for (Chromosome i : union){
 			//If chromosome is non-dominated
 			if(i.getStrength() == 0){
-				Pp.add(i);
+				//Pp.add(i);
+				addTo(Pp, i);
 			}
 		}
 		
@@ -319,7 +332,8 @@ public class SPEA2 {
 			for(Chromosome i : union){
 				//If the solution is dominated
 				if(i.getStrength() != 0){
-					Pp.add(i);
+					//Pp.add(i);
+					addTo(Pp, i);
 				}
 				//Break when Pp meets size requirement 
 				if(Pp.size() == Np){
@@ -332,7 +346,8 @@ public class SPEA2 {
 			Pp.sort(Chromosome.FITNESS_COMPARATOR);
 			
 			for(Chromosome i : Pp){
-				truncatedPp.add(i);
+//				truncatedPp.add(i);
+				addTo(truncatedPp, i);
 				if(truncatedPp.size() == Np){
 					break;
 				}
@@ -350,7 +365,8 @@ public class SPEA2 {
 		ArrayList<Chromosome> B = new ArrayList<>();
 		
 		for(int i = 0; i < matingSize; i++){
-			B.add(Pp.get(i));
+			//B.add(Pp.get(i));
+			addTo(B, Pp.get(i));
 		}
 		
 		return B;
@@ -512,7 +528,7 @@ public class SPEA2 {
 	public static void main (String[] args)
 	{
 
-		SPEA2 spea=scenario(30,6,10000,3,6);
+		SPEA2 spea=scenario(30,6,20000,3,5);
 		spea.initialization();
 		System.out.println("Initialization");
 		int t=0;

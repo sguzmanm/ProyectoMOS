@@ -82,6 +82,8 @@ public class Chromosome {
 	
 	@Override
 	public boolean equals(Object obj) {
-		return this.toString().equals(obj.toString());
+		String a = this.toString().split("\\(")[0];
+		String b = obj.toString().split("\\(")[0];
+		return a.equals(b);
 	}
 }
