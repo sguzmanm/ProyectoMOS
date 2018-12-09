@@ -166,7 +166,7 @@ public class SPEA2 {
 		else if (id==4)
 			return new SPEA2(N,Np,T,kp,3,3,1,1,1,null,"transportCostsBase4.txt","random_reviewsBase4.txt","random_scoresBase4.txt");
 		else if (id==5)
-			return new SPEA2(N,Np,T,kp,10,15,1,13,6,"lifeCostsMedium.txt",null,null,"scoresMedium.txt");
+			return new SPEA2(N,Np,T,kp,10,15,1,3,6,"lifeCostsMedium.txt",null,null,"scoresMedium.txt");
 		else if (id==6)
 			return new SPEA2(N,Np,T,kp,16,50,2,5,1,"lifeCostsReal.txt","transportCostsReal.txt","reviewsReal.txt","scoresReal.txt");
 		else return null;
@@ -305,13 +305,15 @@ public class SPEA2 {
 		//Calculate all fitness
 		for(int i=0;i<union.size();i++)
 		{
+			//System.out.println("R: " + R[i] + " // D: " + D[i]);
 			union.get(i).setFitness(R[i]+D[i]);
 		}
+		//System.out.println("-----------");
 		
 		double[] stats = calcIterationStats();
 		if(t % 500 == 0) {
 			System.out.println("Gen " + t);
-			System.out.println("Pavg = "+ stats[0] + " \t Ppavg = " + stats[1] + " \t unionAvg = " + stats[2]);			
+			System.out.println("Pavg = "+ stats[0] + " \t Ppavg = " + stats[1] + " \t unionAvg = " + stats[2] + " \t Pp S avg = " + stats[3]);			
 		}
 
 	}
@@ -403,6 +405,7 @@ public class SPEA2 {
 			else {
 				offspring = mutation(B.get(a));
 			}
+			
 			if(isValid(offspring.getCode())) {
 				//Decrease counter in duplicate
 				if(!addTo(P, offspring)) {
@@ -415,7 +418,7 @@ public class SPEA2 {
 	}
 	
 	private double[] calcIterationStats() {
-		double Pavg = 0, PpAvg = 0, unionAvg = 0;
+		double Pavg = 0, PpAvg = 0, unionAvg = 0, sAvg = 0;
 		
 		for(Chromosome i: union) {
 			unionAvg += i.getFitness();
@@ -435,7 +438,14 @@ public class SPEA2 {
 		
 		Pavg = Pavg/P.size();
 		
-		return new double[]{Pavg, PpAvg, unionAvg,P.size(),Pp.size()};		
+		for(Chromosome i: Pp) {
+			sAvg += i.getStrength();
+		}
+		
+		sAvg = sAvg/Pp.size();
+		
+		
+		return new double[]{Pavg, PpAvg, unionAvg,sAvg};		
 	}
 	
 	private Chromosome doubleCutCrossover(Chromosome a, Chromosome b){
@@ -513,7 +523,7 @@ public class SPEA2 {
 	
 	private boolean dominate(Chromosome i, Chromosome j)
 	{
-		return i.getF1()<j.getF1() && i.getF2()<j.getF2();
+		return i.getF1() > j.getF1() && i.getF2() > j.getF2();
 	}
 	
 	private boolean isValid(String code)
@@ -553,9 +563,9 @@ public class SPEA2 {
 			spea.B=spea.matingSelection();
 			spea.variation();
 		}
-		System.out.println("------ Solutions -------");
-		for(Chromosome s:A)
-			System.out.println(s);
+		for(Chromosome s:A) {
+			System.out.println(s + " // " + spea.isValid(s.getCode()));
+		}
 		
 	}
 	

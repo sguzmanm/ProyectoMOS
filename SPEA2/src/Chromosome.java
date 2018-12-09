@@ -73,7 +73,7 @@ public class Chromosome {
 	
 	public String toString()
 	{
-		return "Code: "+code+"("+f1+","+f2+")";
+		return "Code: "+code+" ("+f1+","+f2+") // (" + fitness + ")";
 	}
 	
 	public double getFitness() {
