@@ -80,5 +80,8 @@ public class Chromosome {
 		return fitness;
 	}
 	
-	
+	@Override
+	public boolean equals(Object obj) {
+		return this.toString().equals(obj.toString());
+	}
 }

@@ -299,7 +299,7 @@ public class SPEA2 {
 	}
 	
 	private int environmentalSelection()
-	{
+	{		
 		//Return value (number of non-dominated solutions in union)
 		int k = -1;
 		Pp = new ArrayList<>();
@@ -381,8 +381,12 @@ public class SPEA2 {
 			else {
 				offspring = mutation(B.get(a));
 			}
-			if(isValid(offspring.getCode()))
-				P.add(offspring);
+			if(isValid(offspring.getCode())) {
+				//Decrease counter in duplicate
+				if(!addTo(P, offspring)) {
+					i--;
+				}				
+			}
 			else
 				i--;
 		}
@@ -538,7 +542,16 @@ public class SPEA2 {
 	}
 	
 	
+	private boolean addTo(ArrayList<Chromosome> list, Chromosome item) {
 		
+		if(list.indexOf(item) == -1) {
+			list.add(item);
+			return true;
+		}
+		
+		return false;
+		
+	}
 	
 	
 	
