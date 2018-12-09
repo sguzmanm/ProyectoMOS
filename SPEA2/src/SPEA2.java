@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
+import com.sun.xml.internal.bind.v2.runtime.output.StAXExStreamWriterOutput;
+
 public class SPEA2 {
 	
 	// Population size
@@ -98,6 +100,8 @@ public class SPEA2 {
 		{
 			for(int i=0;i<n;i++)
 				Arrays.fill(this.CT[i], 1);
+			for(int i=0;i<n;i++)
+				this.CT[i][i]=0;
 		}
 		//Quantity of reviews
 		double[][]reviews=new double[n][2*max_d];
@@ -545,7 +549,7 @@ public class SPEA2 {
 	{
 
 		//int N, int Np, int T,int kp, int id
-		SPEA2 spea=scenario(30,6,10000,3,5);
+		SPEA2 spea=scenario(100,25,3000,3,5);
 		spea.initialization();
 		System.out.println("Initialization");
 		spea.t=0;
@@ -562,10 +566,17 @@ public class SPEA2 {
 			}
 			spea.B=spea.matingSelection();
 			spea.variation();
+			if((spea.t-1)%1000==0)
+			{
+				System.out.println("Res gen "+spea.t);
+				for(Chromosome s:spea.Pp)
+					System.out.println(s);
+			}
+				
 		}
-		for(Chromosome s:A) {
-			System.out.println(s + " // " + spea.isValid(s.getCode()));
-		}
+		System.out.println("------ Solutions -------");
+		for(Chromosome s:A)
+			System.out.println(s.getCode()+" "+spea.isValid(s.getCode()));
 		
 	}
 	
