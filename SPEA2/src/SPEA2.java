@@ -227,6 +227,9 @@ public class SPEA2 {
 		String[] data=null;
 		for(Chromosome chromosome:union)
 		{
+			f1=0;
+			f2=0;
+			System.out.println("-------\n Allele: "+chromosome.getCode());
 			String code=chromosome.getCode();
 			data=code.split("-");
 			//F1
@@ -512,7 +515,8 @@ public class SPEA2 {
 	public static void main (String[] args)
 	{
 
-		SPEA2 spea=scenario(30,6,10000,3,6);
+		//int N, int Np, int T,int kp, int id
+		SPEA2 spea=scenario(25,10,1,3,1);
 		spea.initialization();
 		System.out.println("Initialization");
 		int t=0;
