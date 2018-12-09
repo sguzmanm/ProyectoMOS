@@ -241,7 +241,7 @@ public class SPEA2 {
 		{
 			f1=0;
 			f2=0;
-			System.out.println("-------\n Allele: "+chromosome.getCode());
+			//System.out.println("-------\n Allele: "+chromosome.getCode());
 			String code=chromosome.getCode();
 			data=code.split("-");
 			//F1
@@ -309,7 +309,10 @@ public class SPEA2 {
 		}
 		
 		double[] stats = calcIterationStats();
-		System.out.println("[t=" + t + "]: \t Pavg = "+ stats[0] + " \t Ppavg = " + stats[1] + " \t unionAvg = " + stats[2]);
+		if(t % 500 == 0) {
+			System.out.println("Gen " + t);
+			System.out.println("Pavg = "+ stats[0] + " \t Ppavg = " + stats[1] + " \t unionAvg = " + stats[2]);			
+		}
 
 	}
 	
@@ -532,30 +535,25 @@ public class SPEA2 {
 	{
 
 		//int N, int Np, int T,int kp, int id
-		SPEA2 spea=scenario(30,6,20000,3,5);
+		SPEA2 spea=scenario(30,6,10000,3,5);
 		spea.initialization();
 		System.out.println("Initialization");
-		int t=0;
+		spea.t=0;
 		ArrayList<Chromosome> A= null;
-		while(t++<spea.T)
+		while(spea.t++<spea.T)
 		{
-			System.out.println("Gen "+(t-1));
 			//(Pavg, PPavg, unionAvg)
 			spea.fitnessAssignment();
-			System.out.println("Fitness Assignment");
 			spea.k=spea.environmentalSelection();
-			System.out.println("Environmental Selection");
-			if(t>=spea.T)
+			if(spea.t>=spea.T)
 			{
 				A=spea.Pp;
 				continue;
 			}
 			spea.B=spea.matingSelection();
-			System.out.println("Mating selection");
 			spea.variation();
-			System.out.println("Variation");
 		}
-		System.out.println("Solutions");
+		System.out.println("------ Solutions -------");
 		for(Chromosome s:A)
 			System.out.println(s);
 		
