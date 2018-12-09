@@ -178,7 +178,7 @@ public class SPEA2 {
 		else if (id==5)
 			return new SPEA2(N,Np,T,kp,10,15,1,3,6,"lifeCostsMedium.txt",null,null,"scoresMedium.txt");
 		else if (id==6)
-			return new SPEA2(N,Np,T,kp,16,50,2,5,1,"lifeCostsReal.txt","transportCostsReal.txt","reviewsReal.txt","scoresReal.txt");
+			return new SPEA2(N,Np,T,kp,16,20,2,5,1,"lifeCostsReal.txt","transportCostsReal.txt","reviewsReal.txt","scoresReal.txt");
 		else return null;
 	}
 
@@ -555,7 +555,7 @@ public class SPEA2 {
 	{
 
 		//int N, int Np, int T,int kp, int id
-		SPEA2 spea=scenario(30,6,3000,3,6);
+		SPEA2 spea=scenario(30,6,25000,3,6);
 		spea.initialization();
 		System.out.println("Initialization");
 		spea.t=0;
