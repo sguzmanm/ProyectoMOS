@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
+import com.sun.xml.internal.bind.v2.runtime.output.StAXExStreamWriterOutput;
+
 public class SPEA2 {
 	
 	// Population size
@@ -98,6 +100,8 @@ public class SPEA2 {
 		{
 			for(int i=0;i<n;i++)
 				Arrays.fill(this.CT[i], 1);
+			for(int i=0;i<n;i++)
+				this.CT[i][i]=0;
 		}
 		//Quantity of reviews
 		double[][]reviews=new double[n][2*max_d];
@@ -166,7 +170,7 @@ public class SPEA2 {
 		else if (id==4)
 			return new SPEA2(N,Np,T,kp,3,3,1,1,1,null,"transportCostsBase4.txt","random_reviewsBase4.txt","random_scoresBase4.txt");
 		else if (id==5)
-			return new SPEA2(N,Np,T,kp,10,15,1,13,6,"lifeCostsMedium.txt",null,null,"scoresMedium.txt");
+			return new SPEA2(N,Np,T,kp,10,15,1,3,6,"lifeCostsMedium.txt",null,null,"scoresMedium.txt");
 		else if (id==6)
 			return new SPEA2(N,Np,T,kp,16,50,2,5,1,"lifeCostsReal.txt","transportCostsReal.txt","reviewsReal.txt","scoresReal.txt");
 		else return null;
@@ -513,7 +517,7 @@ public class SPEA2 {
 	
 	private boolean dominate(Chromosome i, Chromosome j)
 	{
-		return i.getF1()<j.getF1() && i.getF2()<j.getF2();
+		return i.getF1()>j.getF1() && i.getF2()>j.getF2();
 	}
 	
 	private boolean isValid(String code)
@@ -535,7 +539,7 @@ public class SPEA2 {
 	{
 
 		//int N, int Np, int T,int kp, int id
-		SPEA2 spea=scenario(30,6,10000,3,5);
+		SPEA2 spea=scenario(100,25,3000,3,5);
 		spea.initialization();
 		System.out.println("Initialization");
 		spea.t=0;
@@ -552,10 +556,17 @@ public class SPEA2 {
 			}
 			spea.B=spea.matingSelection();
 			spea.variation();
+			if((spea.t-1)%1000==0)
+			{
+				System.out.println("Res gen "+spea.t);
+				for(Chromosome s:spea.Pp)
+					System.out.println(s);
+			}
+				
 		}
 		System.out.println("------ Solutions -------");
 		for(Chromosome s:A)
-			System.out.println(s);
+			System.out.println(s.getCode()+" "+spea.isValid(s.getCode()));
 		
 	}
 	
