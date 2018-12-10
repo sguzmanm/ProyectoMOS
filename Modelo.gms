@@ -1,13 +1,17 @@
 
 $offlisting
-$include D:\Documentos\Docs\ProyectoMOS\datos\paramsBase2.inc
+$include C:\Users\Dell\Documents\UNIANDES\MOS\ProyectoMOS\datos\paramsBase4.inc
 $onlisting
 
 $offlisting
-$include D:\Documentos\Docs\ProyectoMOS\datos\tablesBase2.inc   
+$include C:\Users\Dell\Documents\UNIANDES\MOS\ProyectoMOS\datos\tablesBase4.inc
 $onlisting
 
 Variables
+         num_f1
+         num_f2
+         den_f1
+         den_f2
          x(i,j)       En el dia i me quedo en la ciudad j
          f1           Costo dias
          f2           Costo de transporte
@@ -16,6 +20,10 @@ Variables
 Binary variable x;
 
 Equations
+         r1
+         r2
+         r3
+         r4
          dias    Costo de dias
          vidaProm        Costo de vida promedio
          trans      Costo de transporte
@@ -25,7 +33,10 @@ Equations
          rest_mind (j) Cota minima y maxima de dias
          rest_maxd (j) Cota minima y maxima de dias;
 
-
+r1       ..    (smin(j,Puntaje(j))*d+1)=e=num_f1;
+r2       ..    (sum( (i,j),(x(i,j)*Puntaje(j)) )+1)=e=den_f1;
+r3       ..    ( sum((i,j,k)$(ord(i)<d and ord(k)<>ord(j)),x(i,j)*x(i+1,k)*CT(j,k)) + sum((i,j),x(i,j)*CV(j)) )=e=num_f2;
+r4       ..    (smax(j,CV(j))*d+smax((j,k),CT(j,k))*d)=e=den_f2;
 trans       ..      f2=e=sum((i,j,k)$(ord(i)<d and ord(k)<>ord(j)),x(i,j)*x(i+1,k)*CT(j,k)) ;
 dias     ..      f1=e=(smin(j,Puntaje(j))*d+1)/(sum( (i,j),(x(i,j)*Puntaje(j)) )+1);
 vidaProm ..      f3=e=sum((i,j),x(i,j)*CV(j));
@@ -49,5 +60,9 @@ Display obj.l;
 Display f1.l;
 Display f2.l;
 Display f3.l;
+Display num_f1.l;
+Display num_f2.l;
+Display den_f1.l;
+Display den_f2.l;
 Display x.l;
 

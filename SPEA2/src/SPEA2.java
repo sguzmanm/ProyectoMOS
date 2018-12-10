@@ -143,16 +143,33 @@ public class SPEA2 {
 			}
 		}
 		
+		System.out.println("CV");
+		for(int i=0;i<this.CV.length;i++)
+			System.out.println(this.CV[i]);
+		System.out.println("CT");
+		for(int i=0;i<this.CT.length;i++)
+			System.out.println(Arrays.toString(this.CT[i]));
+		System.out.println("R");
+		for(int i=0;i<reviews.length;i++)
+			System.out.println(Arrays.toString(reviews[i]));
+		System.out.println("S");
+		for(int i=0;i<scores.length;i++)
+				System.out.println(Arrays.toString(scores[i]));
+		
+		
+		
 	}
 	
 	private void readMatrix(String matrixLocation, boolean random,double[][] matrix, BufferedReader br)
 	{
 		try
 		{
+			System.out.println(matrixLocation+" "+matrix.length+" "+matrix[0].length);
 			br=new BufferedReader(new FileReader("./data/"+matrixLocation));
 			for(int i=0;i<matrix.length;i++)
 			{
 				String[] data=br.readLine().split(" ");
+				System.out.println(Arrays.toString(data));
 				for(int j=0;j<matrix[0].length;j++)
 					matrix[i][j]=Double.parseDouble(data[j]);
 			}
@@ -174,7 +191,7 @@ public class SPEA2 {
 		else if (id==3)
 			return new SPEA2(N,Np,T,kp,2,8,3,5,1,"lifeCostsBase3.txt",null,"random_reviewsBase3.txt","random_scoresBase3.txt");
 		else if (id==4)
-			return new SPEA2(N,Np,T,kp,3,3,1,1,1,null,"transportCostsBase4.txt","random_reviewsBase4.txt","random_scoresBase4.txt");
+			return new SPEA2(N,Np,T,kp,4,4,1,1,1,null,"transportCostsBase4.txt","random_reviewsBase4.txt","random_scoresBase4.txt");
 		else if (id==5)
 			return new SPEA2(N,Np,T,kp,10,15,1,3,6,"lifeCostsMedium.txt",null,null,"scoresMedium.txt");
 		else if (id==6)
@@ -539,6 +556,8 @@ public class SPEA2 {
 	private boolean isValid(String code)
 	{
 		String[] data= code.split("-");
+		if(Integer.parseInt(data[0])!=s)
+			return false;
 		int[] quantity=new int[n];
 		for(String s:data)
 		{
@@ -555,7 +574,7 @@ public class SPEA2 {
 	{
 
 		//int N, int Np, int T,int kp, int id
-		SPEA2 spea=scenario(3,2,5000,1,1);
+		SPEA2 spea=scenario(30,6,5000,1,3);
 		spea.initialization();
 		System.out.println("Initialization");
 		spea.t=0;
@@ -576,6 +595,7 @@ public class SPEA2 {
 		System.out.println("------ Solutions -------");
 		for(Chromosome s:A)
 			System.out.println(s);
+		
 		try {
 			spea.saveResults(A);			
 		}

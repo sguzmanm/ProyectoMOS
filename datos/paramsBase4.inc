@@ -6,10 +6,10 @@ Scalars
 	p2 Prioridad presupuesto /1/
 ;
 Scalar d Num dias; 
- set i Dias /i0*i2/;
+ set i Dias /i0*i3/;
 d = card(i)
 Scalar n Num ciudades; 
- set j Ciudades/j1*j3/;
+ set j Ciudades/j1*j4/;
 n = card(j)
 set l Num puntos de interes /l1*l2/;
 Alias (j,k);
