@@ -1,6 +1,6 @@
 # ProyectoMOS
 Proyecto creado para subir el código y los archivos relacionados con el proyecto de MOS. 
-## Estudiantes: 
+## Estudiantes 
 Julián Manrique: 201615449  
 Sergio Guzmán: 201614859  
 ## Estructura
@@ -9,7 +9,7 @@ Flask para generar los archivos de escenarios para GAMS y Java.
 Matlab para la visualiación de los frentes con los archivos results.dat y resultsJava.dat. (pareto.m)  
 Java para la metaheurística con el algoritmo SPEA2, el cual genera el archivo resultsJava.dat. (Carpeta SPA, clase SPEA2.java)  
 GAMS para el modelo con el frente de pareto, usando una variación de pesos ponderados, el cual genera el archivo results.dat. (ModeloPareto.gms)  
-## Inspiraciòn princip59al
+## Inspiración principal
 Algoritmo SPEA 2: https://pdfs.semanticscholar.org/6672/8d01f9ebd0446ab346a855a44d2b138fd82d.pdf  
 ## Implementación SPEA 2
 Esta implementación se realizó en Java, en la carpeta SPEA y en el main de la clase SPEA2.java se tiene la siguiente línea de codigo:  
