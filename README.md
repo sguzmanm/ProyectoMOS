@@ -2,7 +2,7 @@
 Proyecto creado para subir el código y los archivos relacionados con el proyecto de MOS. 
 ## Estudiantes: 
 Julián Manrique: 201615449  
-Sergio Guzmán: 2016148  
+Sergio Guzmán: 201614859  
 ## Estructura
 Las herramientas utilizadas fueron:   
 Flask para generar los archivos de escenarios para GAMS y Java.  
