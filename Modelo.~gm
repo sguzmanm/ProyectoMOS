@@ -36,7 +36,7 @@ noDosCiudades (i)    ..     sum((j),x(i,j) )=e=1;
 primerDia (j)$(ord(j)=inicio)       ..      x('i0',j)=e=1;
 
 Model Modelo /all/;
-option minlp = BONMIN                 ;
+option minlp = COUENNE                 ;
 Solve Modelo using minlp minimizing obj ;
 Display CV;
 Display Puntaje;

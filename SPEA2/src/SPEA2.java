@@ -555,7 +555,7 @@ public class SPEA2 {
 	{
 
 		//int N, int Np, int T,int kp, int id
-		SPEA2 spea=scenario(40,9,2500,1,6);
+		SPEA2 spea=scenario(30,6,5000,1,5);
 		spea.initialization();
 		System.out.println("Initialization");
 		spea.t=0;
@@ -599,7 +599,7 @@ public class SPEA2 {
 	}
 	
 	private void saveResults(ArrayList<Chromosome> results) throws IOException{		
-		PrintWriter pw = new PrintWriter(new File("./data/resultsJava.dat"));
+		PrintWriter pw = new PrintWriter(new File("./../resultsJava.dat"));
 		
 		for(Chromosome i: results) {
 			pw.println("it1 " + i.getF1() + " " + i.getF2());

@@ -1,0 +1,24 @@
+B 2 C o m p i l a t i o n
+B 92 Include File Summary
+B 105 Equation Listing    SOLVE Modelo Using MINLP From line 160
+D 106 r1
+D 112 r2
+D 317 r3
+D 452 r4
+D 457 dias
+D 672 trans
+D 905 fObj
+D 910 noDosciudades
+D 921 primerDia
+D 926 rest_mind
+D 955 rest_maxd
+B 980 Column Listing      SOLVE Modelo Using MINLP From line 160
+E 981 x
+E 1017 f1
+E 1024 f2
+E 1032 obj
+E 1039 num_f1
+E 1046 den_f1
+E 1053 num_f2
+E 1060 den_f2
+B 1069 Model Statistics    SOLVE Modelo Using MINLP From line 160
