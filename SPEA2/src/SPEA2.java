@@ -555,7 +555,7 @@ public class SPEA2 {
 	{
 
 		//int N, int Np, int T,int kp, int id
-		SPEA2 spea=scenario(30,6,5000,1,5);
+		SPEA2 spea=scenario(3,2,5000,1,1);
 		spea.initialization();
 		System.out.println("Initialization");
 		spea.t=0;

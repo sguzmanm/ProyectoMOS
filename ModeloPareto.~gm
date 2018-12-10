@@ -1,10 +1,10 @@
 
 $offlisting
-$include D:\Documentos\Docs\ProyectoMOS\datos\paramsBase3.inc
+$include D:\Documentos\Docs\ProyectoMOS\datos\paramsBase4.inc
 $onlisting
 
 $offlisting
-$include D:\Documentos\Docs\ProyectoMOS\datos\tablesBase3.inc
+$include D:\Documentos\Docs\ProyectoMOS\datos\tablesBase4.inc
 $onlisting
 
 Sets
