@@ -1,12 +1,11 @@
 
 $offlisting
-$include C:\Users\Dell\Documents\UNIANDES\MOS\ProyectoMOS\datos\paramsReal.inc
+$include D:\Documentos\Docs\ProyectoMOS\datos\paramsBase4.inc
 $onlisting
 
 $offlisting
-$include C:\Users\Dell\Documents\UNIANDES\MOS\ProyectoMOS\datos\tablesReal.inc
+$include D:\Documentos\Docs\ProyectoMOS\datos\tablesBase4.inc
 $onlisting
-
 
 Sets
          iter /it1*it11/;
@@ -85,7 +84,7 @@ Display den_f1_res;
 Display den_f2_res;
 Display x_res;
 
-File ModeloPareto /C:\Users\Dell\Documents\UNIANDES\MOS\ProyectoMOS\results.dat/;
+File ModeloPareto /D:\Documentos\Docs\ProyectoMOS\results.dat/;
 Put ModeloPareto
 LOOP(iter,put /iter.tl,@5,f1_res(iter),@18,f2_res(iter) ;);
 
